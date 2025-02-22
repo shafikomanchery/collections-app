@@ -1,0 +1,48 @@
+<div class="container mt-5">
+  <h2>Accounts</h2>
+  <hr/>
+  <div class="row">
+    <div class="col text-end">
+      <button [routerLink]="['../account/create']" class="btn btn-primary">Add account</button>
+    </div>
+  </div>
+  <div class="row mt-5">
+    @for(account of accounts; track account.id){
+    <div [routerLink]="['./account',account.id]" class="col-12 col-sm-6 col-md-3 mb-3">
+      <div class="account-card">
+        <div class="row">
+          <div class="col-12 text-end">
+            <span [ngClass]="getAccountStatusBg(account.status)" class="badge rounded-pill">{{account.status}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <img class="account-avatar" src="assets/icons/account.png" alt="account-avatar" />
+            <h5>{{account.name}}</h5>
+            <h4>{{account.defaultAmount}}</h4>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <span><strong>Start Date</strong> {{account.startDate}}</span>
+          </div>
+        </div>
+        @if(account.endDate){
+          <div class="row">
+            <div class="col">
+              <span><strong>End Date:</strong> {{account.endDate}}</span>
+            </div>
+          </div>
+        }
+        @if(account.dueOn){
+          <div class="row">
+            <div class="col">
+              <span><strong>Due on:</strong> {{account.dueOn}}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    }
+  </div>
+</div>

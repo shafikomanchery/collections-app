@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <h2>Entity List</h2>
+  <hr/>
+  <div class="row">
+    <div class="col text-end">
+      <button [routerLink]="['../create']" class="btn btn-primary">Add Entity</button>
+    </div>
+  </div>
+  <div class="row mt-5">
+    @for(entity of entityList; track entity.id){
+    <div [routerLink]="['../view',entity.id]" class="col-12 col-sm-6 col-md-3 mb-3">
+      <div class="org-card">
+        <div class="row">
+          <div class="col-12 text-end">
+            <span [ngClass]="getStatusBg(entity.status)" class="badge rounded-pill">{{entity.status}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <img class="org-avatar" src="assets/icons/business.png" alt="org-avatar" />
+            <h5>{{entity.name}}</h5>
+            <h4>{{entity.registrationNo}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

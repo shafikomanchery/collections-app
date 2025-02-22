@@ -1,0 +1,24 @@
+.account-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.stat-box {
+  padding: 20px;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.total-collection {
+  background-color: #007bff; /* Primary blue */
+}
+.pending-collection {
+  background-color: #ffc107; /* Warning yellow */
+}
+.monthly-collection {
+  background-color: #28a745; /* Success green */
+}

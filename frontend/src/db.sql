@@ -1,0 +1,123 @@
+CREATE DATABASE IF NOT EXISTS rentals;
+
+USE rentals;
+
+-- Drop tables if they exist
+DROP TABLE IF EXISTS Payment;
+DROP TABLE IF EXISTS Account;
+DROP TABLE IF EXISTS EntityBankAccount;
+DROP TABLE IF EXISTS UserProfile;
+DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Entity;
+
+CREATE TABLE Entity (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    tagline VARCHAR(255),
+    registrationNo VARCHAR(50) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone BIGINT NOT NULL,
+    mobile BIGINT NOT NULL,
+    createdDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('ACTIVE', 'INACTIVE') NOT NULL
+);
+
+CREATE TABLE EntityBankAccount (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    entityId INT NOT NULL,
+    accountHolderName VARCHAR(100) NOT NULL,
+    accountNo VARCHAR(50) NOT NULL,
+    bank VARCHAR(100) NOT NULL,
+    branch VARCHAR(100) NOT NULL,
+    ifscCode VARCHAR(11) NOT NULL,
+    status ENUM('ACTIVE', 'INACTIVE') NOT NULL,
+    FOREIGN KEY (entityId) REFERENCES Entity(id)
+);
+
+CREATE TABLE Account (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    entityId INT NOT NULL,
+    entityBankAccountId INT,
+    name VARCHAR(100) NOT NULL,
+    startDate DATE NOT NULL,
+    endDate DATE,
+    dueOn INT NOT NULL,
+    createdDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    defaultAmount DECIMAL(10, 2) NOT NULL,
+    status ENUM('ACTIVE', 'INACTIVE') NOT NULL,
+    FOREIGN KEY (entityId) REFERENCES Entity(id)
+    FOREIGN KEY (entityBankAccountId) REFERENCES EntityBankAccount(id)
+);
+
+
+
+CREATE TABLE user (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    emailAddress VARCHAR(100) NOT NULL,
+    createdDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('ACTIVE', 'INACTIVE') NOT NULL
+);
+
+CREATE TABLE UserProfile (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    registerno VARCHAR(50) NOT NULL,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    gender ENUM('MALE', 'FEMALE') NOT NULL,
+    homeaddress VARCHAR(255),
+    phone BIGINT,
+    mobile BIGINT,
+    photo VARCHAR(255),
+    createdDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('ACTIVE', 'INACTIVE') NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User(id)
+);
+
+
+CREATE TABLE UserAccountRole (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    accountId INT NOT NULL,
+    userRole ENUM('ADMIN', 'GROUPADMIN', 'MEMBER','USER') NOT NULL,
+    status ENUM('ACTIVE', 'INACTIVE') NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User(id),
+    FOREIGN KEY (accountId) REFERENCES Account(id)
+);
+
+CREATE TABLE UserAccount (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    accountId INT NOT NULL,
+    startDate DATETIME NOT NULL,
+    endDate DATETIME,
+    dueOn INT NOT NULL,
+    createdDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedDate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    amount DECIMAL(10, 2) NOT NULL,
+    status ENUM('ACTIVE', 'INACTIVE') NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User(id),
+    FOREIGN KEY (accountId) REFERENCES Account(id)
+);
+
+CREATE TABLE Payment (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    accountId INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    paymentDate DATETIME NOT NULL,
+    paymentType ENUM('CASH', 'ONLINE') NOT NULL,
+    transactionId VARCHAR(255) NOT NULL,
+    dueDate DATE NOT NULL,
+    remarks TEXT,
+    status ENUM('PAID', 'UNPAID') NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User(id),
+    FOREIGN KEY (accountId) REFERENCES Account(id)
+);

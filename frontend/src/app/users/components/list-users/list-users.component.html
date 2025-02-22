@@ -1,0 +1,45 @@
+<div class="container mt-5">
+  <h2>Users</h2>
+  <hr/>
+  <div class="row">
+    <div class="col text-end">
+      <button [routerLink]="['../create']" class="btn btn-primary">Add User</button>
+    </div>
+  </div>
+  <div class="row mt-5">
+    @for(user of userProfiles; track user.id){
+    <div [routerLink]="['../user',user.userId]" class="col-12 col-sm-6 col-md-3 mb-3">
+      <div class="user-card">
+        <div class="row mb-3">
+          <div class="col-12 text-end">
+            <span [ngClass]="getStatusBg(user.status)" class="badge rounded-pill">{{user.status}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 text-center">
+            <img class="user-avatar" [src]="getAvatarByGender(user.gender)" alt="user-avatar" />
+          </div>
+          <div class="col-8 vstack gap-2">
+            <span><strong>{{user.firstname}} {{user.lastname}}</strong></span>
+            <span>{{user.registerno}}</span>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col hstack gap-2">
+            <i class="fas fa-phone-flip" style="font-size: 1rem;"></i> 
+            <span>+91-{{user.mobile}}</span>
+          </div>
+        </div>
+        @if(user.phone){
+          <div class="row">
+            <div class="col hstack gap-2">
+              <i class="fas fa-mobile-screen-button" style="font-size: 1rem;"></i> 
+              <span>+91-{{user.phone}}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    }
+  </div>
+</div>

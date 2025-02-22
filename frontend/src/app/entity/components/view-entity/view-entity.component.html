@@ -1,0 +1,45 @@
+<div class="container shadow-none bg-body-tertiary rounded p-3 mt-5">
+  <div class="row p-2">
+    <div class="col-12 col-md-12 col-sm-12 text-center">
+      <img class="org-avatar" src="assets/icons/business.png" alt="org-icon" />
+      <h4>{{entity.name}}</h4>
+      <h5>{{entity.registrationNo}}</h5>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-lg-6 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-6">Address</div>
+        <div class="col-6">{{entity.address}}</div>
+      </div>
+      <div class="row">
+        <div class="col-6">Contact no</div>
+        <div class="col-6">+91-{{entity.phone}}</div>
+      </div>
+      <div class="row">
+        <div class="col-6">Alternate no</div>
+        @if(entity.mobile){
+        <div class="col-6">+91-{{entity.mobile}}</div>
+        }
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-6">Email Address</div>
+        @if(entity.email){
+        <div class="col-6">{{entity.email}}</div>
+        }
+      </div>
+      <div class="row">
+        <div class="col-6">Created Date</div>
+        <div class="col-6">{{entity.createdDate}}</div>
+      </div>
+      <div class="row">
+        <div class="col-6">Status</div>
+        <div class="col-6"><span [ngClass]="getStatusBg(entity.status)"
+            class="badge rounded-pill">{{entity.status}}</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-list-accounts></app-list-accounts>

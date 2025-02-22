@@ -1,0 +1,71 @@
+<div class="container mt-5 pb-5">
+  <h2>User Profile</h2>
+  <form [formGroup]="formGroup">
+    <div class="form-group mb-3">
+      <label for="membershipId">Register number</label>
+      <input type="text" class="form-control" id="membershipId" placeholder="Enter membership id"
+        formControlName="registerno" [ngClass]="{ 'is-invalid': formGroup.controls.registerno.invalid && formGroup.controls.registerno.touched }" />
+      <div class="invalid-feedback" *ngIf="formGroup.controls.registerno.invalid && formGroup.controls.registerno.touched">
+        <div *ngIf="formGroup.controls.registerno.errors?.['required']">Register number is required.</div>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="name">First Name</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter firstname" formControlName="firstname" [ngClass]="{ 'is-invalid': formGroup.controls.firstname.invalid && formGroup.controls.firstname.touched }"/>
+      <div class="invalid-feedback" *ngIf="formGroup.controls.firstname.invalid && formGroup.controls.firstname.touched">
+        <div *ngIf="formGroup.controls.firstname.errors?.['required']">First Name is required.</div>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="name">Last Name</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter lastname" formControlName="lastname" [ngClass]="{ 'is-invalid': formGroup.controls.lastname.invalid && formGroup.controls.lastname.touched }"/>
+      <div class="invalid-feedback" *ngIf="formGroup.controls.lastname.invalid && formGroup.controls.lastname.touched">
+        <div *ngIf="formGroup.controls.lastname.errors?.['required']">Name is required.</div>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="gender">Gender</label>
+      <select class="form-select" id="gender" formControlName="gender" [ngClass]="{ 'is-invalid': formGroup.controls.gender.invalid && formGroup.controls.gender.touched }">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="formGroup.controls.gender.invalid && formGroup.controls.gender.touched">
+        <div *ngIf="formGroup.controls.gender.errors?.['required']">Gender is required.</div>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="address">Address</label>
+      <textarea formControlName="homeaddress" class="form-control" id="address" rows="3"
+        placeholder="Enter address"></textarea>
+    </div>
+    <div class="form-group mb-3">
+      <label for="mobile">Mobile</label>
+      <input formControlName="mobile" type="tel" class="form-control" id="mobile"
+        placeholder="Enter mobile number" [ngClass]="{ 'is-invalid': formGroup.controls.mobile.invalid && formGroup.controls.mobile.touched }"/>
+        <div class="invalid-feedback" *ngIf="formGroup.controls.mobile.invalid && formGroup.controls.mobile.touched">
+          <div *ngIf="formGroup.controls.mobile.errors?.['required']">Mobile number is required.</div>
+          <div *ngIf="formGroup.controls.mobile.errors?.['pattern']">Invalid mobile number.</div>
+        </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="altMobile">Alternative Mobile</label>
+      <input formControlName="phone" type="tel" class="form-control" id="altMobile"
+        placeholder="Enter alternative mobile number (optional)" [ngClass]="{ 'is-invalid': formGroup.controls.phone.invalid && formGroup.controls.phone.touched }"/>
+        <div class="invalid-feedback" *ngIf="formGroup.controls.phone.invalid && formGroup.controls.phone.touched">
+          <div *ngIf="formGroup.controls.phone.errors?.['pattern']">Invalid mobile number.</div>
+        </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="emailAddress">Email address</label>
+      <input formControlName="emailAddress" type="emailAddress" class="form-control" id="emailAddress"
+        placeholder="Enter email address" />
+        <div class="invalid-feedback" *ngIf="formGroup.controls.emailAddress.invalid && formGroup.controls.emailAddress.touched">
+          <div *ngIf="formGroup.controls.emailAddress.errors?.['email']">Invalid email format.</div>
+        </div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex">
+      <button class="btn btn-primary" type="submit" (click)="submit(userId?'update':'create')">{{this.userId?'Update':'Create'}}</button>
+      <button class="btn btn-secondary" type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>
